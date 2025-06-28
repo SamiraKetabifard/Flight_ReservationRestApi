@@ -26,13 +26,13 @@ public class BookingServiceImpl implements BookingService {
     private FlightRepository flightRepository;
 
     @Autowired
-    private BookingMapper bookingMapper;  // Autowired MapStruct mapper
+    private BookingMapper bookingMapper;
 
     @Override
     public BookingDto getBookingById(int id) {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new ApiExc(new ErrorInfo(404, "Booking not found")));
-        return bookingMapper.toDTO(booking);  // Using mapper instance
+        return bookingMapper.toDTO(booking);
     }
     @Override
     public BookingDto saveBooking(BookingDto bookingDTO) {

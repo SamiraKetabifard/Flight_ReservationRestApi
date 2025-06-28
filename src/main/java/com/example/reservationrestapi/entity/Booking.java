@@ -17,5 +17,4 @@ public class Booking {
     private Flight flight;
 
     private String seatNumber;
-
 }
