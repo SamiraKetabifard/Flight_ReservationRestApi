@@ -12,6 +12,4 @@ public class FlightDto {
     private String departureCity;
     private String destinationCity;
     private int availableSeats;
-
-
 }

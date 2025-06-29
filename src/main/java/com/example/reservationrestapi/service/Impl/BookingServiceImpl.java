@@ -4,8 +4,8 @@ import com.example.reservationrestapi.dto.BookingDto;
 import com.example.reservationrestapi.entity.Booking;
 import com.example.reservationrestapi.entity.Flight;
 import com.example.reservationrestapi.entity.User;
-import com.example.reservationrestapi.exception.ApiExc;
-import com.example.reservationrestapi.exception.ErrorInfo;
+import com.example.reservationrestapi.exception.ResourceNotFoundException;
+import com.example.reservationrestapi.exception.ConflictException;
 import com.example.reservationrestapi.mapper.BookingMapper;
 import com.example.reservationrestapi.repository.BookingRepository;
 import com.example.reservationrestapi.repository.FlightRepository;
@@ -29,15 +29,16 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public BookingDto getBookingById(int id) {
         Booking booking = bookingRepository.findById(id)
-                .orElseThrow(() -> new ApiExc(new ErrorInfo(404, "Booking not found")));
+                .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
         return bookingMapper.toDTO(booking);
     }
+
     @Override
     public BookingDto saveBooking(BookingDto bookingDTO) {
         User user = userRepository.findById(bookingDTO.getUserId())
-                .orElseThrow(() -> new ApiExc(new ErrorInfo(404, "User not found ID: " + bookingDTO.getUserId())));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + bookingDTO.getUserId()));
         Flight flight = flightRepository.findById(bookingDTO.getFlightId())
-                .orElseThrow(() -> new ApiExc(new ErrorInfo(404, "Flight not found ID: " + bookingDTO.getFlightId())));
+                .orElseThrow(() -> new ResourceNotFoundException("Flight not found with ID: " + bookingDTO.getFlightId()));
 
         Booking booking = bookingMapper.toEntity(bookingDTO, user, flight);
         booking = bookingRepository.save(booking);
