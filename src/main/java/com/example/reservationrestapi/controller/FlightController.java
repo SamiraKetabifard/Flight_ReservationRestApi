@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/flights")
 public class FlightController {
+
     @Autowired
     private FlightServiceImpl flightService;
 

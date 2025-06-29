@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
+
     @Autowired
     private UserServiceImpl userService;
 
@@ -30,13 +31,6 @@ public class UserController {
         UserDto createUser = userService.saveUser(userDto);
         return ResponseEntity.ok(new ApiResExc<>(true, createUser, null));
     }
-
-    @PostMapping("/addMultiple")
-    public ResponseEntity<ApiResExc<List<UserDto>>> addUsers(@RequestBody List<UserDto> userDTOList) {
-        List<UserDto> addUsers = userService.addMultipleUsers(userDTOList);
-        return ResponseEntity.ok(new ApiResExc<>(true, addUsers, null));
-    }
-
     @GetMapping
     public ResponseEntity<ApiResExc<List<UserDto>>> getAllUsers() {
         List<UserDto> users = userService.getAllUsers();

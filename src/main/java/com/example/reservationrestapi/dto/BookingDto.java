@@ -11,5 +11,4 @@ public class BookingDto {
     private int userId;
     private Long flightId;
     private String seatNumber;
-
 }

@@ -12,27 +12,26 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FlightServiceImpl implements FlightService {
-    @Autowired
-    private FlightRepository flightRepository;
 
     @Autowired
-    private FlightMapper flightMapper;  // Autowired MapStruct mapper
+    private FlightRepository flightRepository;
+    @Autowired
+    private FlightMapper flightMapper;
 
     @Override
     public FlightDto getFlightById(Long flightId) {
         Flight flight = flightRepository.findById(flightId)
                 .orElseThrow(() -> new ApiExc(new ErrorInfo(404, "Flight not found ID: " + flightId)));
-        return flightMapper.toDTO(flight);  // Using mapper instance
+        return flightMapper.toDTO(flight);
     }
-
     @Override
     public FlightDto saveFlight(FlightDto flightDto) {
-        if (flightRepository.existsById(flightDto.getFlightId())) {
+        if (flightDto.getFlightId() != null && flightRepository.existsById(flightDto.getFlightId())) {
             throw new ApiExc(new ErrorInfo(409, "Flight Already Exists"));
         }
-
-        Flight flight = flightMapper.toEntity(flightDto);  // Using mapper instance
+        Flight flight = flightMapper.toEntity(flightDto);
         flight = flightRepository.save(flight);
-        return flightMapper.toDTO(flight);  // Using mapper instance
+        return flightMapper.toDTO(flight);
     }
+
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/bookings")
 public class BookingController {
+
     @Autowired
     private BookingService bookingService;
 
@@ -18,7 +19,6 @@ public class BookingController {
         BookingDto getBookingById = bookingService.getBookingById(bookingId);
         return ResponseEntity.ok(new ApiResExc<>(true, getBookingById, null));
     }
-
     @PostMapping
     public ResponseEntity<ApiResExc<BookingDto>> createBooking(@RequestBody BookingDto bookingDto) {
         BookingDto createBooking= bookingService.saveBooking(bookingDto);

@@ -16,15 +16,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BookingServiceImpl implements BookingService {
+
     @Autowired
     private BookingRepository bookingRepository;
-
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private FlightRepository flightRepository;
-
     @Autowired
     private BookingMapper bookingMapper;
 
@@ -41,7 +39,6 @@ public class BookingServiceImpl implements BookingService {
         Flight flight = flightRepository.findById(bookingDTO.getFlightId())
                 .orElseThrow(() -> new ApiExc(new ErrorInfo(404, "Flight not found ID: " + bookingDTO.getFlightId())));
 
-        // Use the mapper with all three arguments
         Booking booking = bookingMapper.toEntity(bookingDTO, user, flight);
         booking = bookingRepository.save(booking);
         return bookingMapper.toDTO(booking);

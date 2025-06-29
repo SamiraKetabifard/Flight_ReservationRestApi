@@ -15,6 +15,5 @@ public class Booking {
 
     @ManyToOne
     private Flight flight;
-
     private String seatNumber;
 }
