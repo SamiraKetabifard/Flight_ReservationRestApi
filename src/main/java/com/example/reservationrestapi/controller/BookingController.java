@@ -1,7 +1,7 @@
 package com.example.reservationrestapi.controller;
 
 import com.example.reservationrestapi.dto.BookingDto;
-import com.example.reservationrestapi.service.BookingService;
+import com.example.reservationrestapi.service.Impl.BookingServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class BookingController {
 
     @Autowired
-    private BookingService bookingService;
+    private BookingServiceImpl bookingService;
 
     @GetMapping("/{bookingId}")
     public ResponseEntity<BookingDto> getBooking(@PathVariable int bookingId) {
