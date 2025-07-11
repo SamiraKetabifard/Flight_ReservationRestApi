@@ -9,11 +9,13 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface BookingMapper {
 
+    //entity to dto
     @Mapping(source = "id", target = "bookingId")
     @Mapping(source = "user.userId", target = "userId")
     @Mapping(source = "flight.flightId", target = "flightId")
     BookingDto toDTO(Booking booking);
 
+    //dto to entity
     @Mapping(target = "id", source = "bookingId")
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "flight", ignore = true)

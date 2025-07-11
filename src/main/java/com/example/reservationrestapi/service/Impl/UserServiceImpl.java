@@ -21,14 +21,12 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
     }
-
     @Override
     public UserDto getUserById(int userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
         return userMapper.toDTO(user);
     }
-
     @Override
     public UserDto saveUser(UserDto userDTO) {
         if(userRepository.existsByUsername(userDTO.getName())){
@@ -41,7 +39,6 @@ public class UserServiceImpl implements UserService {
         user = userRepository.save(user);
         return userMapper.toDTO(user);
     }
-
     @Override
     public List<UserDto> getAllUsers() {
         List<User> users = userRepository.findAll();

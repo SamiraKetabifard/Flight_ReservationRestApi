@@ -5,7 +5,6 @@ import com.example.reservationrestapi.entity.Booking;
 import com.example.reservationrestapi.entity.Flight;
 import com.example.reservationrestapi.entity.User;
 import com.example.reservationrestapi.exception.ResourceNotFoundException;
-import com.example.reservationrestapi.exception.ConflictException;
 import com.example.reservationrestapi.mapper.BookingMapper;
 import com.example.reservationrestapi.repository.BookingRepository;
 import com.example.reservationrestapi.repository.FlightRepository;

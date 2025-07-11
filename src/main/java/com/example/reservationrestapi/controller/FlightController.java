@@ -17,7 +17,6 @@ public class FlightController {
     public ResponseEntity<FlightDto> getFlight(@PathVariable Long flightId) {
         return ResponseEntity.ok(flightService.getFlightById(flightId));
     }
-
     @PostMapping
     public ResponseEntity<FlightDto> createFlight(@RequestBody FlightDto flightDto) {
         return ResponseEntity.ok(flightService.saveFlight(flightDto));
