@@ -58,11 +58,11 @@ class UserControllerTest {
     @Test
     void testUpdateUser_Success() {
         UserDto updatedSamira = new UserDto();
-        updatedSamira.setName("Samira Khan");
+        updatedSamira.setName("Samira ketabifard");
         updatedSamira.setEmail("sk_new@gmail.com");
         when(userService.updateUser(1, updatedSamira)).thenReturn(updatedSamira);
         ResponseEntity<UserDto> response = userController.updateUser(1, updatedSamira);
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("Samira Khan", response.getBody().getName());
+        assertEquals("Samira ketabifard", response.getBody().getName());
     }
 }
