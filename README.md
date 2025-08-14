@@ -55,7 +55,5 @@ Create new booking
 
 `GET /api/bookings/{bookingId}`  
 Get booking details  
-
-   spring.datasource.username=dbuser
    spring.datasource.password=dbpass
    spring.jpa.hibernate.ddl-auto=update
