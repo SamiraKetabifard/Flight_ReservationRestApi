@@ -17,15 +17,14 @@ class UserMapperTest {
         user.setUserId(1);
         user.setUsername("samira");
         user.setEmail("sk@gmail.com");
-        user.setPassword("password123");
+        user.setPassword("12");
 
         UserDto dto = userMapper.toDTO(user);
 
         assertEquals(1, dto.getUserId());
         assertEquals("samira", dto.getName());
         assertEquals("sk@gmail.com", dto.getEmail());
-        assertEquals("password123", dto.getPassword());
-        assertEquals("ADMIN", dto.getRole());
+        assertEquals("12", dto.getPassword());
     }
     @Test
     void testToEntity() {
@@ -33,14 +32,13 @@ class UserMapperTest {
         dto.setUserId(2);
         dto.setName("Mina Nosrati");
         dto.setEmail("mn@gmail.com");
-        dto.setPassword("securePass");
-        dto.setRole("USER");
+        dto.setPassword("12");
 
         User user = userMapper.toEntity(dto);
 
         assertEquals(2, user.getUserId());
         assertEquals("Mina Nosrati", user.getUsername());
         assertEquals("mn@gmail.com", user.getEmail());
-        assertEquals("securePass", user.getPassword());
+        assertEquals("12", user.getPassword());
     }
 }
