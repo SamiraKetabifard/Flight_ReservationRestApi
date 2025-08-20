@@ -5,8 +5,8 @@ import java.util.List;
 
 public interface UserService {
 
-    UserDto getUserById(int userId);
     UserDto saveUser(UserDto userDto);
+    UserDto getUserById(int userId);
     List<UserDto> getAllUsers();
     UserDto updateUser(int userId, UserDto userDto);
 }

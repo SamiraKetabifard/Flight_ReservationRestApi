@@ -26,21 +26,20 @@ public class BookingServiceImpl implements BookingService {
     private BookingMapper bookingMapper;
 
     @Override
-    public BookingDto getBookingById(int id) {
-        Booking booking = bookingRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Booking not found"));
+    public BookingDto saveBooking(BookingDto bookingDto) {
+        User user = userRepository.findById(bookingDto.getUserId()).orElseThrow(() ->
+                        new ResourceNotFoundException("User not found with ID: " + bookingDto.getUserId()));
+        Flight flight = flightRepository.findById(bookingDto.getFlightId()).orElseThrow(() ->
+                        new ResourceNotFoundException("Flight not found with ID: " + bookingDto.getFlightId()));
+
+        Booking booking = bookingMapper.toEntity(bookingDto, user, flight);
+        booking = bookingRepository.save(booking);
         return bookingMapper.toDTO(booking);
     }
-
     @Override
-    public BookingDto saveBooking(BookingDto bookingDTO) {
-        User user = userRepository.findById(bookingDTO.getUserId())
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + bookingDTO.getUserId()));
-        Flight flight = flightRepository.findById(bookingDTO.getFlightId())
-                .orElseThrow(() -> new ResourceNotFoundException("Flight not found with ID: " + bookingDTO.getFlightId()));
-
-        Booking booking = bookingMapper.toEntity(bookingDTO, user, flight);
-        booking = bookingRepository.save(booking);
+    public BookingDto getBookingById(int id) {
+        Booking booking = bookingRepository.findById(id).orElseThrow(() ->
+                        new ResourceNotFoundException("Booking not found"));
         return bookingMapper.toDTO(booking);
     }
 }

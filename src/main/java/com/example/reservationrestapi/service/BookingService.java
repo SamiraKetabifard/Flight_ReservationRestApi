@@ -4,7 +4,7 @@ import com.example.reservationrestapi.dto.BookingDto;
 
 public interface BookingService {
 
+    BookingDto saveBooking(BookingDto bookingDto);
     BookingDto getBookingById(int bookingId);
-    BookingDto saveBooking(BookingDto bookingDTO);
 
 }
