@@ -1,6 +1,6 @@
 ✈️ Flight Reservation REST API
 
-A secure Spring Boot REST API for managing flight bookings with comprehensive reservation features and user management.
+Spring Boot REST API for managing flight bookings with comprehensive reservation features and user management.
 
  🌟 Features:
  
