@@ -16,7 +16,7 @@ public interface BookingMapper {
     BookingDto toDTO(Booking booking);
 
     //dto to entity
-    @Mapping(target = "id", source = "bookingId")
+    @Mapping(source = "bookingId", target = "id")
     @Mapping(target = "user", ignore = true)
     @Mapping(target = "flight", ignore = true)
     Booking toEntity(BookingDto dto, @Context User user, @Context Flight flight);
