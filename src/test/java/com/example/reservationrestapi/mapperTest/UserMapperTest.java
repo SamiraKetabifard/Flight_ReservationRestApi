@@ -18,7 +18,6 @@ class UserMapperTest {
         user.setUsername("samira");
         user.setEmail("sk@gmail.com");
         user.setPassword("password123");
-        user.setRole("ADMIN");
 
         UserDto dto = userMapper.toDTO(user);
 
@@ -43,6 +42,5 @@ class UserMapperTest {
         assertEquals("Mina Nosrati", user.getUsername());
         assertEquals("mn@gmail.com", user.getEmail());
         assertEquals("securePass", user.getPassword());
-        assertEquals("USER", user.getRole());
     }
 }
