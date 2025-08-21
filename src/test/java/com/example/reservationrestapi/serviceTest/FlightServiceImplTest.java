@@ -44,6 +44,9 @@ class FlightServiceImplTest {
         flight = new Flight();
         flight.setFlightId(100L);
         flight.setFlightNumber("FL123");
+        flight.setDepartureCity("New York");
+        flight.setDestinationCity("London");
+        flight.setAvailableSeats(150);
     }
     @Test
     void testGetFlightById_HappyPath() {
@@ -65,9 +68,15 @@ class FlightServiceImplTest {
     void testSaveFlight_HappyPath() {
         FlightDto newFlightDto = new FlightDto();
         newFlightDto.setFlightNumber("FL456");
+        newFlightDto.setDepartureCity("New York");
+        newFlightDto.setDestinationCity("London");
+        newFlightDto.setAvailableSeats(150);
 
         Flight newFlight = new Flight();
         newFlight.setFlightNumber("FL456");
+        newFlight.setDepartureCity("New York");
+        newFlight.setDestinationCity("London");
+        newFlight.setAvailableSeats(150);
 
         when(flightMapper.toEntity(newFlightDto)).thenReturn(newFlight);
         when(flightRepository.save(newFlight)).thenReturn(newFlight);
@@ -76,6 +85,7 @@ class FlightServiceImplTest {
         FlightDto result = flightService.saveFlight(newFlightDto);
 
         assertEquals("FL456", result.getFlightNumber());
+        assertEquals("London",result.getDestinationCity());
     }
     @Test
     void testSaveFlight_Conflict() {

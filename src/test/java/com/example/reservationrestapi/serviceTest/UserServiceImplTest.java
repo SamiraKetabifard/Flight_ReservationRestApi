@@ -79,13 +79,14 @@ class UserServiceImplTest {
     @Test
     void testSaveUser_EmailConflict() {
         when(userRepository.existsByEmail("sk@gmail.com")).thenReturn(true);
-        assertThrows(ConflictException.class, () -> userService.saveUser(userDto));
+        assertThrows(ConflictException.class, () ->
+                userService.saveUser(userDto));
     }
     @Test
     void testUpdateUser_Success() {
         UserDto updatedDto = new UserDto();
-        updatedDto.setName("Samira Updated");
-        updatedDto.setEmail("sk_updated@gmail.com");
+        updatedDto.setName("Samira ketabi");
+        updatedDto.setEmail("sk_up@gmail.com");
 
         when(userRepository.findById(1)).thenReturn(Optional.of(user));
         when(userRepository.save(any(User.class))).thenReturn(user);
@@ -94,7 +95,7 @@ class UserServiceImplTest {
         UserDto result = userService.updateUser(1, updatedDto);
 
         assertNotNull(result);
-        assertEquals("Samira Updated", result.getName());
-        assertEquals("sk_updated@gmail.com", result.getEmail());
+        assertEquals("Samira ketabi", result.getName());
+        assertEquals("sk_up@gmail.com", result.getEmail());
     }
 }

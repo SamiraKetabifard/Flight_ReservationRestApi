@@ -53,7 +53,6 @@ public class UserServiceImpl implements UserService {
                         new ResourceNotFoundException("User not found with ID: " + userId));
         user.setUsername(userDto.getName());
         user.setEmail(userDto.getEmail());
-        user.setPassword(userDto.getPassword());
 
         user = userRepository.save(user);
         return userMapper.toDTO(user);
