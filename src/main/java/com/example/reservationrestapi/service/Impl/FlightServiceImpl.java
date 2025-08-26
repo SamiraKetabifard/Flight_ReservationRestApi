@@ -19,18 +19,19 @@ public class FlightServiceImpl implements FlightService {
     private FlightMapper flightMapper;
 
     @Override
-    public FlightDto getFlightById(Long flightId) {
-        Flight flight = flightRepository.findById(flightId)
-                .orElseThrow(() -> new ResourceNotFoundException("Flight not found with ID: " + flightId));
-        return flightMapper.toDTO(flight);
-    }
-    @Override
     public FlightDto saveFlight(FlightDto flightDto) {
         if (flightDto.getFlightId() != null && flightRepository.existsById(flightDto.getFlightId())) {
             throw new ConflictException("Flight already exists with ID: " + flightDto.getFlightId());
         }
         Flight flight = flightMapper.toEntity(flightDto);
         flight = flightRepository.save(flight);
+        return flightMapper.toDTO(flight);
+    }
+
+    @Override
+    public FlightDto getFlightById(Long flightId) {
+        Flight flight = flightRepository.findById(flightId)
+                .orElseThrow(() -> new ResourceNotFoundException("Flight not found with ID: " + flightId));
         return flightMapper.toDTO(flight);
     }
 }

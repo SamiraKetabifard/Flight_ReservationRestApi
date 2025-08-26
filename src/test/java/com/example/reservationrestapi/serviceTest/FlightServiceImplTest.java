@@ -49,22 +49,6 @@ class FlightServiceImplTest {
         flight.setAvailableSeats(150);
     }
     @Test
-    void testGetFlightById_HappyPath() {
-        when(flightRepository.findById(100L)).thenReturn(Optional.of(flight));
-        when(flightMapper.toDTO(flight)).thenReturn(flightDto);
-
-        FlightDto result = flightService.getFlightById(100L);
-
-        assertEquals("FL123", result.getFlightNumber());
-    }
-    @Test
-    void testGetFlightById_NotFound() {
-        when(flightRepository.findById(100L)).thenReturn(Optional.empty());
-
-        assertThrows(ResourceNotFoundException.class,
-                () -> flightService.getFlightById(100L));
-    }
-    @Test
     void testSaveFlight_HappyPath() {
         FlightDto newFlightDto = new FlightDto();
         newFlightDto.setFlightNumber("FL456");
@@ -81,9 +65,9 @@ class FlightServiceImplTest {
         when(flightMapper.toEntity(newFlightDto)).thenReturn(newFlight);
         when(flightRepository.save(newFlight)).thenReturn(newFlight);
         when(flightMapper.toDTO(newFlight)).thenReturn(newFlightDto);
-
+        //act
         FlightDto result = flightService.saveFlight(newFlightDto);
-
+        //assert
         assertEquals("FL456", result.getFlightNumber());
         assertEquals("London",result.getDestinationCity());
     }
@@ -92,5 +76,21 @@ class FlightServiceImplTest {
         when(flightRepository.existsById(100L)).thenReturn(true);
         assertThrows(ConflictException.class,
                 () -> flightService.saveFlight(flightDto));
+    }
+    @Test
+    void testGetFlightById() {
+        when(flightRepository.findById(100L)).thenReturn(Optional.of(flight));
+        when(flightMapper.toDTO(flight)).thenReturn(flightDto);
+        //act
+        FlightDto result = flightService.getFlightById(100L);
+        //assert
+        assertEquals("FL123", result.getFlightNumber());
+    }
+    @Test
+    void testGetFlightById_NotFound() {
+        when(flightRepository.findById(100L)).thenReturn(Optional.empty());
+
+        assertThrows(ResourceNotFoundException.class,
+                () -> flightService.getFlightById(100L));
     }
 }

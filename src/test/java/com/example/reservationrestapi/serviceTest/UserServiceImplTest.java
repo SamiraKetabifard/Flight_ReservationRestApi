@@ -45,17 +45,6 @@ class UserServiceImplTest {
         userDto.setEmail("sk@gmail.com");
     }
     @Test
-    void testGetUserById_Success() {
-        when(userRepository.findById(1)).thenReturn(Optional.of(user));
-        when(userMapper.toDTO(user)).thenReturn(userDto);
-
-        UserDto result = userService.getUserById(1);
-
-        assertNotNull(result);
-        assertEquals(1, result.getUserId());
-        assertEquals("samira", result.getName());
-    }
-    @Test
     void testSaveUser_Success() {
         UserDto minaDto = new UserDto();
         minaDto.setName("Mina Nosrati");
@@ -70,9 +59,9 @@ class UserServiceImplTest {
         when(userMapper.toEntity(minaDto)).thenReturn(minaUser);
         when(userRepository.save(minaUser)).thenReturn(minaUser);
         when(userMapper.toDTO(minaUser)).thenReturn(minaDto);
-
+        //act
         UserDto result = userService.saveUser(minaDto);
-
+        //assert
         assertNotNull(result);
         assertEquals("Mina Nosrati", result.getName());
     }
@@ -83,6 +72,17 @@ class UserServiceImplTest {
                 userService.saveUser(userDto));
     }
     @Test
+    void testGetUserById_Success() {
+        when(userRepository.findById(1)).thenReturn(Optional.of(user));
+        when(userMapper.toDTO(user)).thenReturn(userDto);
+        //act
+        UserDto result = userService.getUserById(1);
+        //assert
+        assertNotNull(result);
+        assertEquals(1, result.getUserId());
+        assertEquals("samira", result.getName());
+    }
+    @Test
     void testUpdateUser_Success() {
         UserDto updatedDto = new UserDto();
         updatedDto.setName("Samira ketabi");
@@ -91,9 +91,9 @@ class UserServiceImplTest {
         when(userRepository.findById(1)).thenReturn(Optional.of(user));
         when(userRepository.save(any(User.class))).thenReturn(user);
         when(userMapper.toDTO(any(User.class))).thenReturn(updatedDto);
-
+        //act
         UserDto result = userService.updateUser(1, updatedDto);
-
+        //assert
         assertNotNull(result);
         assertEquals("Samira ketabi", result.getName());
         assertEquals("sk_up@gmail.com", result.getEmail());

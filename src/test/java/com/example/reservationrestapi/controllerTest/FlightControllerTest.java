@@ -36,8 +36,17 @@ class FlightControllerTest {
         flightDto.setAvailableSeats(150);
     }
     @Test
+    void testCreateFlight_HappyPath() {
+        when(flightService.saveFlight(flightDto)).thenReturn(flightDto);
+        //act
+        ResponseEntity<FlightDto> response = flightController.createFlight(flightDto);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("London", response.getBody().getDestinationCity());
+    }
+    @Test
     void testGetFlight_HappyPath() {
         when(flightService.getFlightById(100L)).thenReturn(flightDto);
+        //act
         ResponseEntity<FlightDto> response = flightController.getFlight(100L);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("FL123", response.getBody().getFlightNumber());
@@ -48,12 +57,5 @@ class FlightControllerTest {
                 .thenThrow(new ResourceNotFoundException("Flight not found"));
         assertThrows(ResourceNotFoundException.class,
                 () -> flightController.getFlight(100L));
-    }
-    @Test
-    void testCreateFlight_HappyPath() {
-        when(flightService.saveFlight(flightDto)).thenReturn(flightDto);
-        ResponseEntity<FlightDto> response = flightController.createFlight(flightDto);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals("London", response.getBody().getDestinationCity());
     }
 }

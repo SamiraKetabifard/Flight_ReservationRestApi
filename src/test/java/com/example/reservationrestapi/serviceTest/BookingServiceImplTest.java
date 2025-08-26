@@ -59,26 +59,6 @@ class BookingServiceImplTest {
         flight.setFlightNumber("FL123");
     }
     @Test
-    void testGetBookingById_HappyPath() {
-        Booking booking = new Booking();
-        booking.setId(1);
-        booking.setUser(user);
-        booking.setFlight(flight);
-        when(bookingRepository.findById(1)).thenReturn(Optional.of(booking));
-        when(bookingMapper.toDTO(booking)).thenReturn(bookingDto);
-
-        BookingDto result = bookingService.getBookingById(1);
-
-        assertEquals(1, result.getBookingId());
-        assertEquals(1, result.getUserId());
-    }
-    @Test
-    void testGetBookingById_NotFound() {
-        when(bookingRepository.findById(1)).thenReturn(Optional.empty());
-        assertThrows(ResourceNotFoundException.class,
-                () -> bookingService.getBookingById(1));
-    }
-    @Test
     void testSaveBooking_HappyPath() {
         BookingDto minaBooking = new BookingDto();
         minaBooking.setUserId(2);
@@ -101,9 +81,9 @@ class BookingServiceImplTest {
         when(bookingMapper.toEntity(minaBooking, mina, flight2)).thenReturn(booking);
         when(bookingRepository.save(booking)).thenReturn(booking);
         when(bookingMapper.toDTO(booking)).thenReturn(minaBooking);
-
+        //act
         BookingDto result = bookingService.saveBooking(minaBooking);
-
+        //assert
         assertEquals(2, result.getUserId());
     }
     @Test
@@ -118,5 +98,25 @@ class BookingServiceImplTest {
         when(flightRepository.findById(100L)).thenReturn(Optional.empty());
         assertThrows(ResourceNotFoundException.class,
                 () -> bookingService.saveBooking(bookingDto));
+    }
+    @Test
+    void testGetBookingById() {
+        Booking booking = new Booking();
+        booking.setId(1);
+        booking.setUser(user);
+        booking.setFlight(flight);
+        when(bookingRepository.findById(1)).thenReturn(Optional.of(booking));
+        when(bookingMapper.toDTO(booking)).thenReturn(bookingDto);
+        //act
+        BookingDto result = bookingService.getBookingById(1);
+        //assert
+        assertEquals(1, result.getBookingId());
+        assertEquals(1, result.getUserId());
+    }
+    @Test
+    void testGetBookingById_NotFound() {
+        when(bookingRepository.findById(1)).thenReturn(Optional.empty());
+        assertThrows(ResourceNotFoundException.class,
+                () -> bookingService.getBookingById(1));
     }
 }

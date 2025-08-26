@@ -12,27 +12,27 @@ class UserMapperTest {
     private final UserMapper userMapper = new UserMapperImpl();
 
     @Test
-    void testToDTO() {
+    void testMapEntityToDTO() {
         User user = new User();
         user.setUserId(1);
         user.setUsername("samira");
         user.setEmail("sk@gmail.com");
-
+        //act
         UserDto dto = userMapper.toDTO(user);
-
+        //assert
         assertEquals(1, dto.getUserId());
         assertEquals("samira", dto.getName());
         assertEquals("sk@gmail.com", dto.getEmail());
     }
     @Test
-    void testToEntity() {
+    void testMapDtoToEntity() {
         UserDto dto = new UserDto();
         dto.setUserId(2);
         dto.setName("Mina Nosrati");
         dto.setEmail("mn@gmail.com");
-
+        //act
         User user = userMapper.toEntity(dto);
-
+        //assert
         assertEquals(2, user.getUserId());
         assertEquals("Mina Nosrati", user.getUsername());
         assertEquals("mn@gmail.com", user.getEmail());

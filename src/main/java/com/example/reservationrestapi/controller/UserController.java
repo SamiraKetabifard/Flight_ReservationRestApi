@@ -14,13 +14,13 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
-    @GetMapping("/{userId}")
-    public ResponseEntity<UserDto> getUser(@PathVariable int userId) {
-        return ResponseEntity.ok(userService.getUserById(userId));
-    }
     @PostMapping
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
         return ResponseEntity.ok(userService.saveUser(userDto));
+    }
+    @GetMapping("/{userId}")
+    public ResponseEntity<UserDto> getUser(@PathVariable int userId) {
+        return ResponseEntity.ok(userService.getUserById(userId));
     }
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers() {

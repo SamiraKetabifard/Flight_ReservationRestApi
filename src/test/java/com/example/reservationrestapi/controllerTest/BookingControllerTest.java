@@ -3,7 +3,7 @@ package com.example.reservationrestapi.controllerTest;
 import com.example.reservationrestapi.controller.BookingController;
 import com.example.reservationrestapi.dto.BookingDto;
 import com.example.reservationrestapi.exception.ResourceNotFoundException;
-import com.example.reservationrestapi.service.BookingService;
+import com.example.reservationrestapi.service.Impl.BookingServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 class BookingControllerTest {
 
     @Mock
-    private BookingService bookingService;
+    private BookingServiceImpl bookingService;
 
     @InjectMocks
     private BookingController bookingController;
@@ -35,8 +35,21 @@ class BookingControllerTest {
         bookingDto.setSeatNumber("A12");
     }
     @Test
+    void testCreateBooking_HappyPath() {
+        BookingDto newBooking = new BookingDto();
+        newBooking.setUserId(2);
+        newBooking.setFlightId(101L);
+        newBooking.setSeatNumber("B34");
+        when(bookingService.saveBooking(newBooking)).thenReturn(newBooking);
+        //act
+        ResponseEntity<BookingDto> response = bookingController.createBooking(newBooking);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(2, response.getBody().getUserId());
+    }
+    @Test
     void testGetBooking_HappyPath() {
         when(bookingService.getBookingById(1)).thenReturn(bookingDto);
+        //act
         ResponseEntity<BookingDto> response = bookingController.getBooking(1);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(1, response.getBody().getUserId());
@@ -44,20 +57,10 @@ class BookingControllerTest {
     }
     @Test
     void testGetBooking_NotFound() {
+        //act
         when(bookingService.getBookingById(1))
                 .thenThrow(new ResourceNotFoundException("Booking not found"));
         assertThrows(ResourceNotFoundException.class,
                 () -> bookingController.getBooking(1));
-    }
-    @Test
-    void testCreateBooking_HappyPath() {
-        BookingDto newBooking = new BookingDto();
-        newBooking.setUserId(2);
-        newBooking.setFlightId(101L);
-        newBooking.setSeatNumber("B34");
-        when(bookingService.saveBooking(newBooking)).thenReturn(newBooking);
-        ResponseEntity<BookingDto> response = bookingController.createBooking(newBooking);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(2, response.getBody().getUserId());
     }
 }

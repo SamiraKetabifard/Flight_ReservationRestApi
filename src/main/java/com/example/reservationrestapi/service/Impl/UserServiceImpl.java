@@ -22,12 +22,6 @@ public class UserServiceImpl implements UserService {
         this.userMapper = userMapper;
     }
     @Override
-    public UserDto getUserById(int userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
-        return userMapper.toDTO(user);
-    }
-    @Override
     public UserDto saveUser(UserDto userDTO) {
         if(userRepository.existsByUsername(userDTO.getName())){
             throw new ConflictException("Username already exists: " + userDTO.getName());
@@ -37,6 +31,12 @@ public class UserServiceImpl implements UserService {
         }
         User user = userMapper.toEntity(userDTO);
         user = userRepository.save(user);
+        return userMapper.toDTO(user);
+    }
+    @Override
+    public UserDto getUserById(int userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with ID: " + userId));
         return userMapper.toDTO(user);
     }
     @Override

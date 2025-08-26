@@ -42,6 +42,7 @@ class UserControllerTest {
     @Test
     void testCreateUser_Success() {
         when(userService.saveUser(minaDto)).thenReturn(minaDto);
+        //act
         ResponseEntity<UserDto> response = userController.createUser(minaDto);
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Mina Nosrati", response.getBody().getName());
@@ -49,7 +50,9 @@ class UserControllerTest {
     @Test
     void testGetAllUsers_Success() {
         when(userService.getAllUsers()).thenReturn(List.of(samiraDto, minaDto));
+        //act
         ResponseEntity<List<UserDto>> response = userController.getAllUsers();
+        //assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(2, response.getBody().size());
         assertTrue(response.getBody().stream().anyMatch(u -> u.getName().equals("samira")));
@@ -61,7 +64,9 @@ class UserControllerTest {
         updatedSamira.setName("Samira ketabifard");
         updatedSamira.setEmail("sk_new@gmail.com");
         when(userService.updateUser(1, updatedSamira)).thenReturn(updatedSamira);
+        //act
         ResponseEntity<UserDto> response = userController.updateUser(1, updatedSamira);
+        //assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Samira ketabifard", response.getBody().getName());
     }

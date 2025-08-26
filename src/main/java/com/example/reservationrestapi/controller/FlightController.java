@@ -13,12 +13,12 @@ public class FlightController {
     @Autowired
     private FlightServiceImpl flightService;
 
-    @GetMapping("/{flightId}")
-    public ResponseEntity<FlightDto> getFlight(@PathVariable Long flightId) {
-        return ResponseEntity.ok(flightService.getFlightById(flightId));
-    }
     @PostMapping
     public ResponseEntity<FlightDto> createFlight(@RequestBody FlightDto flightDto) {
         return ResponseEntity.ok(flightService.saveFlight(flightDto));
+    }
+    @GetMapping("/{flightId}")
+    public ResponseEntity<FlightDto> getFlight(@PathVariable Long flightId) {
+        return ResponseEntity.ok(flightService.getFlightById(flightId));
     }
 }

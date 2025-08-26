@@ -6,5 +6,4 @@ public interface BookingService {
 
     BookingDto saveBooking(BookingDto bookingDto);
     BookingDto getBookingById(int bookingId);
-
 }

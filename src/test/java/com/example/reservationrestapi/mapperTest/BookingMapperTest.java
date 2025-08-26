@@ -14,7 +14,7 @@ class BookingMapperTest {
     private final BookingMapper bookingMapper = new BookingMapperImpl();
 
     @Test
-    void testToDTO_HappyPath() {
+    void testMapEntityToDTO() {
         User user = new User();
         user.setUserId(1);
         user.setUsername("samira");
@@ -28,14 +28,16 @@ class BookingMapperTest {
         booking.setUser(user);
         booking.setFlight(flight);
         booking.setSeatNumber("A12");
+        //act
         BookingDto dto = bookingMapper.toDTO(booking);
+        //assert
         assertEquals(10, dto.getBookingId());
         assertEquals(1, dto.getUserId());
         assertEquals(100L, dto.getFlightId());
         assertEquals("A12", dto.getSeatNumber());
     }
     @Test
-    void testToEntity_HappyPath() {
+    void testMapDtoToEntity() {
         BookingDto dto = new BookingDto();
         dto.setBookingId(10);
         dto.setUserId(1);
@@ -48,7 +50,9 @@ class BookingMapperTest {
 
         Flight flight = new Flight();
         flight.setFlightId(100L);
+        //act
         Booking booking = bookingMapper.toEntity(dto, user, flight);
+        //assert
         assertEquals(10, booking.getId());
         assertEquals("Mina Nosrati", booking.getUser().getUsername());
         assertEquals(100L, booking.getFlight().getFlightId());
